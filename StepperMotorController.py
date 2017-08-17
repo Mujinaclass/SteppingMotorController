@@ -35,8 +35,7 @@ AVAIRABLE_PWM_FREQ = { 1: (50,100,200,250,400,500,800,1000,1250,1600,2000,2500,4
 
 PWM_dutycycle = (0, 128) # PWM (STOP, 1/2 on)
 PWM_sample_rate = 8  # [us]
-
-motor_step_resolution = 1
+motor_step_resolution = 2
 
 def motorSettings(stepResolution):
     global pi, motor_step_resolution
@@ -47,14 +46,14 @@ def motorSettings(stepResolution):
     pi.set_mode(MOTOR_M0_PIN,pigpio.OUTPUT)
     pi.set_mode(MOTOR_M1_PIN,pigpio.OUTPUT)
 
-    pi.set_PWM_frequency(MOTOR_STEP_PIN, AVAIRABLE_PWM_FREQ[PWM_sample_rate][13])
+    pi.set_PWM_frequency(MOTOR_STEP_PIN, AVAIRABLE_PWM_FREQ[PWM_sample_rate][16])
     pi.set_PWM_dutycycle(MOTOR_STEP_PIN, PWM_dutycycle[0])
     pi.write(MOTOR_SLEEP_PIN,1)
     time.sleep(1e-3)               #Wake-up time. Need to set over 1msec
 
     if stepResolution in MOTOR_STEPRESMODES_DICT:
         pi.write(MOTOR_M0_PIN,MOTOR_STEPRESMODES_DICT[stepResolution][0])
-        pi.write(MOTOR_M0_PIN,MOTOR_STEPRESMODES_DICT[stepResolution][1])
+        pi.write(MOTOR_M1_PIN,MOTOR_STEPRESMODES_DICT[stepResolution][1])
     else:
         motor_step_resolution = 1        # Set step resolution to Full-step mode
         pi.write(MOTOR_M0_PIN,0)
@@ -75,6 +74,6 @@ def moveMotor(direc,vel,durat):      # direc = 0 (CCW) or 1 (CW), velocity [mm/s
     
 
 motorSettings(motor_step_resolution)
-moveMotor(1,20,0.5)  #limit vel = 25? 20000Hz 50: 40000Hz
+moveMotor(1,20,1)  #limit vel = 25? 20000Hz 50: 40000Hz
 
 pi.write(MOTOR_SLEEP_PIN,0)
