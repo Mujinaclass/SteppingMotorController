@@ -1,3 +1,18 @@
+# Pin layout
+# RasPi  | DVR8833 | Motor | Power | Condenser (100uF)
+# GPIO17 |   DIR   |       |       |
+# GPIO27 |   STEP  |       |       |
+# GPIO22 |   SLP   |       |       |
+# GPIO23 |   M1    |       |       |
+# GPIO24 |   M0    |       |       |
+#  GND   |   GND   |       |       |
+#        |   A1    | Blacl |       |
+#        |   A2    | Green |       |
+#        |   B1    | Red   |       |
+#        |   A2    | Blue  |       |
+#        |   VMOT  |       |   +   |      +
+#        |   GND   |       |  GND  |      -
+
 import pigpio
 import time
 
@@ -41,7 +56,7 @@ motor_moving_dulation = 1          # [sec]
 AVAIRABLE_FLOW_RATE_DICT = {}      # {Flow rate [ml/s]: PWM frequency [Hz]}
 for freq in range(len(AVAIRABLE_PWM_FREQ_DICT[PWM_SAMPLE_RATE])):
     RPM = (MOTOR_STEP_ANGLE / motor_step_resolution * AVAIRABLE_PWM_FREQ_DICT[PWM_SAMPLE_RATE][freq]) / 360  # [rotation / sec]
-    flow_rate = RPM * 0.7 * SYRINGE_AREA * 10**-3 # [ml / sec]
+    flow_rate = RPM * SCREW_LEAD * SYRINGE_AREA * 10**-3 # [ml / sec]
     if RPM <= MOTOR_SPEED_LIMIT:
         AVAIRABLE_FLOW_RATE_DICT[flow_rate] = AVAIRABLE_PWM_FREQ_DICT[PWM_SAMPLE_RATE][freq]
     else:
