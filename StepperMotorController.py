@@ -34,8 +34,8 @@ MOTOR_STEP_ANGLE = 1.8             # Motor full step angle: 1.8 deg./step
 MOTOR_SPEED_LIMIT = 5              # [rps] Stepping Motor limit is 5 rps.
 MOTOR_STEPRESMODES_DICT = {1: (0,0), 2: (1,0), 4: (0,0), 8: (0,1), 16: (1,1), 32: (0,1)} # Resolution: (M0 pin, M1 pin)
 
-SCREW_STANDARD = 'M4'
-SCREW_LEAD = 0.7                   # [mm] Lead = pitch
+SCREW_STANDARD = 'M5'
+SCREW_LEAD = 0.8                   # [mm] Lead = pitch
 
 SYRINGE_AREA = 165.13              # [mm^2]
 
